@@ -16,8 +16,18 @@ class ProjectFactory extends Factory
      */
     public function definition()
     {
+        $extra_attributes = [];
+        for ($i = 0; $i < rand(1, 5); $i++) {
+            $extra_attributes[$this->faker->word] = $this->faker->sentence;
+        }
+
         return [
             //
+            'name' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'url' => $this->faker->url,
+            'user_id' => \App\Models\User::factory(),
+            'custom_fields' => $extra_attributes,
         ];
     }
 }
