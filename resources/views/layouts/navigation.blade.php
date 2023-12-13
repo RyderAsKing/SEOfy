@@ -107,3 +107,9 @@
         </div>
     </div>
 </nav>
+
+@impersonating($guard = null)
+<div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 text-center text-white text-lg">
+    <a class="block" href="{{ route('impersonate.leave') }}">Leave impersonation &rarr;</a>
+</div>
+@endImpersonating
