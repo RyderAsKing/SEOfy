@@ -7,8 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-
             <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
                 <div class="block mb-3">
                     <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Welcome to
