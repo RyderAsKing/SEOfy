@@ -20,7 +20,7 @@
                             Admin
                         </th>
 
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 text-right">
                             Actions
                         </th>
                     </tr>
@@ -43,13 +43,13 @@
                             @endif
                         </td>
 
-                        <td class="py-4 max-h flex gap-4 justify-center items-center">
+                        <td class="py-4 max-h flex gap-4 justify-end">
                             <a href="{{route('users.edit', $user)}}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
                             <a href="{{route('users.show', $user)}}"
                                 class="font-medium text-blue-600 hover:underline">View</a>
                             <a href="{{route('impersonate', $user->id)}}"
-                                class="font-medium text-blue-600 hover:underline">Impersonate</a>
+                                class="font-medium text-blue-600 hover:underline mr-2">Impersonate</a>
                         </td>
                     </tr>
                     @endforeach
