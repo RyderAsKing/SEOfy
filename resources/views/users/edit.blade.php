@@ -1,8 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit an existing user') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Edit an existing user') }}
+            </h2>
+
+            <form action="{{route('users.destroy', $user)}}" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <x-secondary-button type="submit" class="max-w-fit">
+                    <span>Delete X</span>
+                </x-secondary-button>
+            </form>
+
+        </div>
     </x-slot>
 
     <div class="py-6">
@@ -44,11 +56,15 @@
                             @enderror
                         </div>
 
-                        <x-primary-button type="submit" class="max-w-fit">
-                            <span>Edit user &rarr;</span>
-                        </x-primary-button>
+                        <div class="flex gap-2">
+                            <x-primary-button type="submit" class="max-w-fit">
+                                <span>Edit user &rarr;</span>
+                            </x-primary-button>
+
+                        </div>
                     </div>
                 </form>
+
 
             </div>
         </div>
