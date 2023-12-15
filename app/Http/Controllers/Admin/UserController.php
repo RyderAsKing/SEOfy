@@ -13,10 +13,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $users = User::latest()->paginate(25);
+        $users = User::latest();
+
+        if ($request->has('search')) {
+            $users
+                ->where('name', 'like', '%' . $request->get('search') . '%')
+                ->orWhere('email', 'like', '%' . $request->get('search') . '%');
+        }
+
+        $users = $users->paginate(25);
 
         return view('admin.users.index', compact('users'));
     }
