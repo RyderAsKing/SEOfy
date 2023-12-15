@@ -20,6 +20,12 @@
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                         {{ __('Users') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('admin.projects.index')"
+                        :active="request()->routeIs('admin.projects.index')">
+                        {{ __('Projects') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>
@@ -102,6 +108,11 @@
             @if(auth()->user()->is_admin)
             <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                 {{ __('Users') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('admin.projects.index')"
+                :active="request()->routeIs('admin.projects.index')">
+                {{ __('Projects') }}
             </x-responsive-nav-link>
             @endif
         </div>
