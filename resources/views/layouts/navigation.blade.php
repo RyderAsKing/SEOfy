@@ -21,11 +21,14 @@
                         {{ __('Users') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('admin.plans.index')" :active="request()->routeIs('admin.plans.index')">
+                        {{ __('Plans') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('admin.projects.index')"
                         :active="request()->routeIs('admin.projects.index')">
                         {{ __('Projects') }}
                     </x-nav-link>
-
                     @endif
                 </div>
             </div>
@@ -110,10 +113,15 @@
                 {{ __('Users') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('admin.plans.index')" :active="request()->routeIs('admin.plans.index')">
+                {{ __('Plans') }}
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('admin.projects.index')"
                 :active="request()->routeIs('admin.projects.index')">
                 {{ __('Projects') }}
             </x-responsive-nav-link>
+
             @endif
         </div>
 
