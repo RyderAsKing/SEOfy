@@ -44,9 +44,9 @@
                         </td>
 
                         <td class="p-4 max-h flex gap-4 justify-end">
-                            <a href="{{route('admin.projects.edit', $plan)}}"
+                            <a href="{{route('admin.plans.edit', $plan)}}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
-                            <a href="{{route('admin.projects.show', $plan)}}"
+                            <a href="{{route('admin.plans.show', $plan)}}"
                                 class="font-medium text-blue-600 hover:underline">View</a>
                         </td>
                     </tr>
