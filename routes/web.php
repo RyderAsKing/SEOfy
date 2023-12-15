@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::resource('users', UserController::class);
+        Route::resource('plans', PlanController::class);
         Route::resource('projects', ProjectController::class);
 
         Route::get('/users/{user}/impersonate', [
