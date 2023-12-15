@@ -36,6 +36,7 @@
                         </div>
 
                         <input type="hidden" name="features" id="featuresInput">
+
                         <x-input-label for="features" value="Features" />
                         <div id="featuresContainer">
                             <!-- Features will be added dynamically here -->
@@ -62,14 +63,12 @@
           var featuresContainer = document.getElementById('featuresContainer');
 
           var featureInput = document.createElement('div');
-          featureInput.classList.add('feature-input');
+          featureInput.classList.add('feature-input', 'mb-2', 'flex', 'gap-1');
 
           featureInput.innerHTML = `
-          <div class="mb-2 flex gap-1 ">
             <x-text-input type="text" name="featureKey[]"  placeholder="Feature Name" required></x-text-input>
             <x-text-input type="text" name="featureValue[]" placeholder="Feature Description" required></x-text-input>
             <x-secondary-button type="button" onclick="removeFeatureField(this)">Remove</x-secondary-button>
-            </div>
           `;
 
           featuresContainer.appendChild(featureInput);
@@ -83,9 +82,7 @@
         function submitForm() {
           var form = document.getElementById('store');
 
-          // You can add additional validation if needed
 
-          // Collect all the features
           var features = [];
           var featureKeyInputs = form.querySelectorAll('input[name="featureKey[]"]');
           var featureValueInputs = form.querySelectorAll('input[name="featureValue[]"]');
@@ -106,7 +103,7 @@
 
           document.getElementById('featuresInput').value = JSON.stringify(features);
 
-            form.submit();
+          form.submit();
         }
 
         document.addEventListener('DOMContentLoaded', function () {
