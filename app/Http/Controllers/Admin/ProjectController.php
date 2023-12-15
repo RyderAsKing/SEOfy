@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProjectController extends Controller
 {
@@ -12,9 +13,18 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $projects = Project::latest();
+
+        if ($request->has('search')) {
+            $projects->where('name', 'like', "%{$request->search}%");
+        }
+
+        $projects = $projects->paginate(25);
+
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
