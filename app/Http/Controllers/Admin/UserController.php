@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -17,7 +18,7 @@ class UserController extends Controller
         //
         $users = User::latest()->paginate(10);
 
-        return view('users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -28,7 +29,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        return view('users.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -50,7 +51,7 @@ class UserController extends Controller
         User::create($request->all());
 
         return redirect()
-            ->route('users.index')
+            ->route('admin.users.index')
             ->with('success', 'User created successfully.');
     }
 
@@ -63,7 +64,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        return view('users.show', compact('user'));
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -75,7 +76,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
-        return view('users.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -107,7 +108,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect()
-            ->route('users.index')
+            ->route('admin.users.index')
             ->with('success', 'User updated successfully');
     }
 
@@ -121,14 +122,14 @@ class UserController extends Controller
     {
         if ($user->id === auth()->user()->id) {
             return redirect()
-                ->route('users.index')
+                ->route('admin.users.index')
                 ->with('error', 'You cannot delete yourself');
         }
 
         $user->delete();
 
         return redirect()
-            ->route('users.index')
+            ->route('admin.users.index')
             ->with('success', 'User deleted successfully');
     }
 

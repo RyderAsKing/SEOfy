@@ -16,7 +16,7 @@
                     clients</p>
 
                 @if(auth()->user()->is_admin)
-                <a href="{{route('users.index')}}"
+                <a href="{{route('admin.users.index')}}"
                     class="inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
                     <span>Manage users &rarr;</span>
                 </a>

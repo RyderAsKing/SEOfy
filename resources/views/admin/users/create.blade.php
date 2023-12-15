@@ -13,7 +13,7 @@
                 </div>
                 <p class="mb-4 text-neutral-500">Creating a new user by providing a email and password</p>
 
-                <form method="post" action="{{route('users.store')}}">
+                <form method="post" action="{{route('admin.users.store')}}">
                     @csrf
 
                     <div class="form-inputs my-2 flex flex-col gap-4">

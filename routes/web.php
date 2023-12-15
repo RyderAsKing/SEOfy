@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,14 +36,17 @@ Route::middleware('auth')->group(function () {
     );
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('users', UserController::class);
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+        Route::resource('users', UserController::class);
 
-    Route::get('/users/{user}/impersonate', [
-        UserController::class,
-        'impersonate',
-    ])->name('users.impersonate');
-});
+        Route::get('/users/{user}/impersonate', [
+            UserController::class,
+            'impersonate',
+        ])->name('users.impersonate');
+    });
 
 Route::impersonate();
 

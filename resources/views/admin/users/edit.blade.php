@@ -5,7 +5,7 @@
                 {{ __('Edit an existing user') }}
             </h2>
 
-            <form action="{{route('users.destroy', $user)}}" method="POST">
+            <form action="{{route('admin.users.destroy', $user)}}" method="POST">
                 @csrf
                 @method('DELETE')
 
@@ -25,7 +25,7 @@
                 </div>
                 <p class="mb-4 text-neutral-500">Leave the fields unchanged if you dont want to update</p>
 
-                <form method="post" action="{{route('users.update', $user)}}">
+                <form method="post" action="{{route('admin.users.update', $user)}}">
                     @csrf
                     @method('PATCH')
                     <div class="form-inputs my-2 flex flex-col gap-4">

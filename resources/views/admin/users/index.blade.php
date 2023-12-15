@@ -44,9 +44,9 @@
                         </td>
 
                         <td class="py-4 max-h flex gap-4 justify-end">
-                            <a href="{{route('users.edit', $user)}}"
+                            <a href="{{route('admin.users.edit', $user)}}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
-                            <a href="{{route('users.show', $user)}}"
+                            <a href="{{route('admin.users.show', $user)}}"
                                 class="font-medium text-blue-600 hover:underline">View</a>
                             <a href="{{route('impersonate', $user->id)}}"
                                 class="font-medium text-blue-600 hover:underline mr-2">Impersonate</a>
