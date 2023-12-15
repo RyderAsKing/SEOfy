@@ -14,6 +14,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
     </head>
 
     <body class="font-sans antialiased">
@@ -31,23 +34,23 @@
 
             <!-- Page Content -->
             <main>
-                @if (session('success'))
-                <div class="mt-2 max-w-7xl bg-green-100 mx-auto text-green-700 p-4 mb-4" role="alert">
-                    <p class="font-bold">Success</p>
-                    <p>{{ session('success') }}</p>
-                </div>
-                @endif
-
-                @if (session('error'))
-                <div class="mt-2 max-w-7xl bg-red-100  text-red-700 p-4 mb-4" role="alert">
-                    <p class="font-bold">Error</p>
-                    <p>{{ session('error') }}</p>
-                </div>
-                @endif
-
                 {{ $slot }}
             </main>
         </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+        <script>
+            var notyf = new Notyf();
+            @if (session('success'))
+                notyf.success('{{ session('success') }}');
+            @endif
+
+            @if (session('error'))
+                notyf.error('{{ session('error') }}');
+            @endif
+        </script>
     </body>
 
 </html>
