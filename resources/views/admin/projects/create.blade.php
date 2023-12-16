@@ -31,7 +31,15 @@
                             <x-input-label for="description" value="Description" />
                             <x-text-input name="description" label="description"
                                 placeholder="Eg. This project is about..." required />
-                            @error('email')
+                            @error('description')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-col">
+                            <x-input-label for="website" value="Website" />
+                            <x-text-input name="url" label="website" placeholder="Eg. google.com" required />
+                            @error('url')
                             <x-input-error :messages="$message"> </x-input-error>
                             @enderror
                         </div>
