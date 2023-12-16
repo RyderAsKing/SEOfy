@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12 grid grid-cols-2 max-w-7xl mx-auto gap-2">
+    <div class="py-12 grid grid-cols-2 max-w-7xl mx-auto gap-2 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <h1 class="text-xl mb-1">Project details</h1>
             <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
