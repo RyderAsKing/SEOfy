@@ -87,9 +87,11 @@ class PlanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, Plan $plan)
     {
         //
+
+        return view('admin.plans.edit', compact('plan'));
     }
 
     /**
@@ -99,9 +101,37 @@ class PlanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Plan $plan)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'features' => 'json|required',
+        ]);
+
+        $plan->name = $request->name;
+        $plan->description = $request->description;
+        // unset the features
+        $plan->features = null;
+
+        $jsonFeatures = $request->input('features');
+
+        $featuresArray = json_decode($jsonFeatures, true);
+        $plan->features = new \stdClass();
+
+        foreach ($featuresArray as $feature) {
+            $key = $feature['key'];
+            $value = $feature['value'];
+
+            $plan->features->$key = $value;
+        }
+
+        $plan->save();
+
+        return redirect()
+            ->route('admin.plans.index')
+            ->with('success', 'Plan updated successfully.');
     }
 
     /**

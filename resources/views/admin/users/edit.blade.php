@@ -23,7 +23,7 @@
                 <div class="block mb-3">
                     <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">Editing a user</h5>
                 </div>
-                <p class="mb-4 text-neutral-500">Leave the fields unchanged if you dont want to update</p>
+                <p class="mb-4 text-neutral-500">Leave the fields unchanged if you don't want to update</p>
 
                 <form method="post" action="{{route('admin.users.update', $user)}}">
                     @csrf
