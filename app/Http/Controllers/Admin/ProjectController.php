@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Plan;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,6 +36,10 @@ class ProjectController extends Controller
     public function create()
     {
         //
+        // plans
+        $plans = Plan::all();
+
+        return view('admin.projects.create', compact('plans'));
     }
 
     /**
@@ -46,6 +51,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->all());
     }
 
     /**
