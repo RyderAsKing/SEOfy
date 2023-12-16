@@ -1,8 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Editing a plan') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Editing a plan') }}
+            </h2>
+
+            <form action="{{route('admin.plans.destroy', $plan)}}" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <x-secondary-button type="submit" class="max-w-fit">
+                    <span>Delete X</span>
+                </x-secondary-button>
+            </form>
+        </div>
     </x-slot>
 
     <div class="py-12">

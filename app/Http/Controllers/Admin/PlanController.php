@@ -140,8 +140,13 @@ class PlanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Plan $plan)
     {
         //
+        $plan->delete();
+
+        return redirect()
+            ->route('admin.plans.index')
+            ->with('success', 'Plan deleted successfully.');
     }
 }
