@@ -11,7 +11,14 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'url', 'user_id'];
+    protected $fillable = [
+        'name',
+        'description',
+        'url',
+        'user_id',
+        'plan_id',
+        'custom_fields',
+    ];
 
     public $casts = [
         'custom_fields' => SchemalessAttributes::class,

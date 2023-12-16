@@ -18,7 +18,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         //
-        $projects = Project::latest();
+        $projects = Project::with('plan')->latest();
 
         if ($request->has('search')) {
             $projects->where('name', 'like', "%{$request->search}%");

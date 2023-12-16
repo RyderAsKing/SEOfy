@@ -29,6 +29,9 @@
                         <th scope="col" class="px-6 py-3">
                             URL
                         </th>
+                        <th scope="col" class="px-6 py-3">
+                            Plan Name
+                        </th>
 
                         <th scope="col" class="px-6 py-3 text-right">
                             Actions
@@ -55,7 +58,9 @@
                                 class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{Str::limit($project->url,
                                 32)}}</a>
                         </td>
-
+                        <td class="px-6 py-4">
+                            {{Str::limit($project->plan->name, 42)}}
+                        </td>
                         <td class="p-4 max-h flex gap-4 justify-end">
                             <a href="{{route('admin.projects.edit', $project)}}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
