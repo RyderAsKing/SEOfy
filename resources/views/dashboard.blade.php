@@ -41,17 +41,18 @@
                 </div>
                 <div class=" bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
                     <div class="block mb-3">
+                        <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{$plans}}
+                        </h5>
+                    </div>
+                    <p class="mb-4 text-neutral-500">Plans created</p>
+                </div>
+                <div class=" bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
+                    <div class="block mb-3">
                         <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{$projects}}</h5>
                     </div>
                     <p class="mb-4 text-neutral-500">Projects registered</p>
                 </div>
-                <div class=" bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
-                    <div class="block mb-3">
-                        <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{$active_projects}}
-                        </h5>
-                    </div>
-                    <p class="mb-4 text-neutral-500">Active projects</p>
-                </div>
+
             </div>
             @endif
         </div>

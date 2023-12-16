@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -19,11 +20,8 @@ class DashboardController extends Controller
         if (auth()->user()->is_admin) {
             $users = User::all()->count();
             $projects = Project::all()->count();
-            $active_projects = Project::where('status', 'active')->count();
+            $plans = Plan::all()->count();
         }
-        return view(
-            'dashboard',
-            compact('users', 'projects', 'active_projects')
-        );
+        return view('dashboard', compact('users', 'projects', 'plans'));
     }
 }

@@ -62,6 +62,17 @@ class ProjectController extends Controller
 
         $project = Project::create($request->all());
 
+        // get all the features (key) from the Plan model and attach them to the project model (key)
+        // example if the plan has 3 features, attach all 3 features to the project but the value will be 0
+
+        $features = Plan::find($request->plan_id)->features;
+
+        foreach ($features as $feature => $value) {
+            $project->custom_fields->$feature = 0;
+        }
+
+        $project->save();
+
         return redirect()
             ->route('admin.projects.index')
             ->with('success', 'Project created successfully.');
