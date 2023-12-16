@@ -68,7 +68,7 @@
                                 <template x-for="(option, index) in radioGroupOptions" :key="index">
                                     <label @click="radioGroupSelectedValue=option.value"
                                         class="flex items-start p-5 space-x-3 bg-white border rounded-md shadow-sm hover:bg-gray-50 border-neutral-200/70">
-                                        <input type="radio" name="plan" :value="option.value"
+                                        <input type="radio" name="plan_id" :value="option.value"
                                             class="text-gray-900 translate-y-px focus:ring-gray-700" />
                                         <span class="relative flex flex-col text-left space-y-1.5 leading-none">
                                             <span x-text="option.title" class="font-semibold"></span>
@@ -77,6 +77,16 @@
                                     </label>
                                 </template>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <x-input-label for="user_id" value="User" />
+                            <select name="user_id" id="user_id"
+                                class="form-control select2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
+                                @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }} | {{ $user->email }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <x-primary-button type="submit" class="max-w-fit">
@@ -88,4 +98,9 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 </x-app-layout>

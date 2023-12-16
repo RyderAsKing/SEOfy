@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Plan;
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,8 +39,9 @@ class ProjectController extends Controller
         //
         // plans
         $plans = Plan::all();
+        $users = User::all();
 
-        return view('admin.projects.create', compact('plans'));
+        return view('admin.projects.create', compact('plans', 'users'));
     }
 
     /**
@@ -50,8 +52,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'url' => 'required',
+            'plan_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $project = Project::create($request->all());
+
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project created successfully.');
     }
 
     /**
