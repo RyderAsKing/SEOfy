@@ -19,9 +19,9 @@
                     @foreach ($plan->features as $feature => $description)
 
                     <div class="max-w-sm bg-white border rounded-lg shadow-sm p-4 border-neutral-200/60">
-                        <a href="#_" class="block mb-3">
+                        <div class="block mb-3">
                             <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{$feature}}</h5>
-                        </a>
+                        </div>
                         <p class="mb-4 text-neutral-500">{{$description}}</p>
 
                     </div>
