@@ -19,6 +19,8 @@ class Project extends Model
         'user_id',
         'plan_id',
         'custom_fields',
+        'public_note',
+        'private_note',
     ];
 
     public $casts = [

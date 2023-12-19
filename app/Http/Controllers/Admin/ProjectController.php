@@ -125,6 +125,47 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'user_id' => 'required',
+            'name' => 'required',
+            'description' => 'required',
+            'url' => 'required',
+            'features' => 'json|required',
+            'public_note' => 'nullable|max:2000',
+            'private_note' => 'nullable|max:2000',
+        ]);
+
+        $project = Project::findOrFail($id);
+
+        $project->user_id = $request->user_id;
+        $project->name = $request->name;
+        $project->description = $request->description;
+        $project->url = $request->url;
+        $project->public_note = $request->public_note;
+        $project->private_note = $request->private_note;
+
+        // unset the features
+        $project->custom_fields = null;
+
+        // convert the json features to an array
+        $jsonFeatures = $request->input('features');
+
+        $featuresArray = json_decode($jsonFeatures, true);
+        $project->custom_fields = new \stdClass();
+
+        // loop through the array and attach the features to the project
+        foreach ($featuresArray as $feature) {
+            $key = $feature['key'];
+            $value = $feature['value'];
+
+            $project->custom_fields->$key = $value;
+        }
+
+        $project->save();
+
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project updated successfully.');
     }
 
     /**

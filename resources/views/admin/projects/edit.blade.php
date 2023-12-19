@@ -48,6 +48,15 @@
                             @enderror
                         </div>
 
+                        <div class="flex flex-col">
+                            <x-input-label for="url" value="Website" />
+                            <x-text-input name="url" placeholder="Eg. This project is for belongs to Something LLC"
+                                required :value="$project->url" />
+                            @error('url')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
+                        </div>
+
                         <input type="hidden" name="features" id="featuresInput">
 
                         <x-input-label for="features" value="Features" />
@@ -81,20 +90,32 @@
                                 <option value="{{ $user->id }}">{{ $user->name }} | {{ $user->email }}</option>
                                 @endforeach
                             </select>
+
+                            @error('user_id')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <x-input-label for="private_note" value="Private Note" />
                             <textarea type="text" placeholder="Type your note here (only visible to admins)."
                                 name="private_note"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"></textarea>
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">{{$project->private_note}}</textarea>
+
+                            @error('private_note')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <x-input-label for="public_note" value="Public Note" />
                             <textarea type="text" placeholder="Type your note here (visible to client)."
                                 name="public_note"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"></textarea>
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">{{$project->public_note}}</textarea>
+
+                            @error('public_note')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
                         </div>
                         <x-primary-button type="button" onclick="submitForm()" class="max-w-fit">
                             <span>Edit project &rarr;</span>
