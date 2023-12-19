@@ -7,7 +7,7 @@
 
             @if(auth()->user()->is_admin)
             <div>
-                <a href="{{route('admin.plans.edit', $project)}}"
+                <a href="{{route('admin.projects.edit', $project)}}"
                     class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
                     <span>Edit Project &rarr;</span>
                 </a>
@@ -83,11 +83,11 @@
                 <p class="mb-4 text-neutral-500">There are no updates yet, check back later.</p>
             </div>
             @endif
-            <ol class="border-l border-neutral-300 ">
+            <ol class="border-l border-neutral-300 dark:border-neutral-500">
                 @foreach ($timelines as $timeline)
                 <li>
                     <div class="flex-start flex items-center pt-3">
-                        <div class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-300 "></div>
+                        <div class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-500 "></div>
                         <p class="text-sm text-neutral-500 ">
                             {{$timeline->created_at->format('d.m.Y')}}
                         </p>
