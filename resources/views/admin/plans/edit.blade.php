@@ -43,7 +43,7 @@
                             <x-text-input name="description" label="Description"
                                 placeholder="Eg. This plan is for small businesses" required
                                 :value="$plan->description" />
-                            @error('email')
+                            @error('description')
                             <x-input-error :messages="$message"> </x-input-error>
                             @enderror
                         </div>
