@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Timeline;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,5 +38,10 @@ class Project extends Model
     public function plan()
     {
         return $this->belongsTo(Plan::class);
+    }
+
+    public function timeline()
+    {
+        return $this->hasMany(Timeline::class);
     }
 }

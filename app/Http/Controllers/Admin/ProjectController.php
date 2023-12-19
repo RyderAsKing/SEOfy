@@ -87,8 +87,11 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         //
-
-        return view('admin.projects.show', compact('project'));
+        $timelines = $project
+            ->timeline()
+            ->latest()
+            ->paginate(25);
+        return view('admin.projects.show', compact('project', 'timelines'));
     }
 
     /**
