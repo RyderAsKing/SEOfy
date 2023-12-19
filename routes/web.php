@@ -46,6 +46,32 @@ Route::prefix('admin')
         Route::resource('plans', PlanController::class);
         Route::resource('projects', ProjectController::class);
 
+        // timeline routes
+        Route::get('/projects/{project}/timelines/create', [
+            ProjectController::class,
+            'timeline_create',
+        ])->name('projects.timeline.create');
+
+        Route::post('/projects/{project}/timelines', [
+            ProjectController::class,
+            'timeline_store',
+        ])->name('projects.timeline.store');
+
+        Route::get('/projects/{project}/timelines/{timeline_id}/edit', [
+            ProjectController::class,
+            'timeline_edit',
+        ])->name('projects.timeline.edit');
+
+        Route::patch('/projects/{project}/timelines/{timeline_id}', [
+            ProjectController::class,
+            'timeline_update',
+        ])->name('projects.timeline.update');
+
+        Route::delete('/projects/{project}/timelines/{timeline_id}', [
+            ProjectController::class,
+            'timeline_destroy',
+        ])->name('projects.timeline.destroy');
+
         Route::get('/users/{user}/impersonate', [
             UserController::class,
             'impersonate',

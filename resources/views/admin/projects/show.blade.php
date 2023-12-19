@@ -6,10 +6,16 @@
             </h2>
 
             @if(auth()->user()->is_admin)
-            <a href="{{route('admin.plans.edit', $project)}}"
-                class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
-                <span>Edit Project &rarr;</span>
-            </a>
+            <div>
+                <a href="{{route('admin.plans.edit', $project)}}"
+                    class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
+                    <span>Edit Project &rarr;</span>
+                </a>
+                <a href="{{route('admin.projects.timeline.create', $project)}}"
+                    class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
+                    <span>Add update &rarr;</span>
+                </a>
+            </div>
             @endif
         </div>
     </x-slot>
@@ -86,12 +92,27 @@
                             {{$timeline->created_at->format('d.m.Y')}}
                         </p>
                     </div>
-                    <div class="mb-6 ml-4 mt-2">
+                    <div class=" ml-4 mt-2">
                         <h4 class="mb-1.5 text-xl font-semibold">{{$timeline->title}}</h4>
                         <p class="mb-3 text-neutral-500 ">
                             {{$timeline->description}}
                         </p>
                     </div>
+                    @if(auth()->user()->is_admin)
+                    <div class="flex ml-4 mb-6 gap-2 items-center">
+                        <a href="{{route('admin.projects.timeline.edit', [$project, $timeline])}}"
+                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                            <span>Edit update &rarr;</span>
+                        </a>
+
+                        <form method="POST"
+                            action="{{route('admin.projects.timeline.destroy', [$project, $timeline->id])}}">
+                            @csrf
+                            @method('DELETE')
+                            <x-secondary-button class="h-full" type="submit">Delete update X</x-secondary-button>
+                        </form>
+                    </div>
+                    @endif
                 </li>
                 @endforeach
             </ol>

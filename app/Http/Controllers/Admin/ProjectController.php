@@ -127,4 +127,63 @@ class ProjectController extends Controller
     {
         //
     }
+
+    public function timeline_create(Project $project)
+    {
+        return view('admin.projects.timeline.create', compact('project'));
+    }
+
+    public function timeline_store(Request $request, Project $project)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $project->timeline()->create($request->all());
+
+        return redirect()
+            ->route('admin.projects.show', $project)
+            ->with('success', 'Timeline created successfully.');
+    }
+
+    public function timeline_edit(Project $project, $timeline_id)
+    {
+        $timeline = $project->timeline()->findOrFail($timeline_id);
+
+        return view(
+            'admin.projects.timeline.edit',
+            compact('project', 'timeline')
+        );
+    }
+
+    public function timeline_update(
+        Request $request,
+        Project $project,
+        $timeline_id
+    ) {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $timeline = $project->timeline()->findOrFail($timeline_id);
+
+        $timeline->update($request->all());
+
+        return redirect()
+            ->route('admin.projects.show', $project)
+            ->with('success', 'Timeline updated successfully.');
+    }
+
+    public function timeline_destroy(Project $project, $timeline_id)
+    {
+        $timeline = $project->timeline()->findOrFail($timeline_id);
+
+        $timeline->delete();
+
+        return redirect()
+            ->route('admin.projects.show', $project)
+            ->with('success', 'Timeline deleted successfully.');
+    }
 }
