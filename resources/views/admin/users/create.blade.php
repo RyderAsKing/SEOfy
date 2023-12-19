@@ -43,6 +43,12 @@
                             @enderror
                         </div>
 
+                        <div class="items-center">
+                            <input id="checkbox-id" type="checkbox" name="is_admin"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-neutral-900 focus:ring-neutral-900">
+                            <label for="checkbox-id" class="ml-2 text-sm font-medium text-gray-900">Is admin?</label>
+                        </div>
+
                         <x-primary-button type="submit" class="max-w-fit">
                             <span>Create user &rarr;</span>
                         </x-primary-button>

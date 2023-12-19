@@ -54,9 +54,14 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
+            'is_admin' => 'nullable',
         ]);
 
-        User::create($request->all());
+        $user = User::create($request->only('name', 'email', 'password'));
+
+        $user->is_admin = $request->get('is_admin') ? 1 : 0;
+
+        $user->save();
 
         return redirect()
             ->route('admin.users.index')
@@ -102,6 +107,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:6',
+            'is_admin' => 'nullable',
         ]);
 
         $user = User::find($id);
@@ -112,6 +118,8 @@ class UserController extends Controller
         if ($request->get('password')) {
             $user->password = bcrypt($request->get('password'));
         }
+
+        $user->is_admin = $request->get('is_admin') ? 1 : 0;
 
         $user->save();
 
