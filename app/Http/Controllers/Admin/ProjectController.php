@@ -100,9 +100,19 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
         //
+        // plans
+        $plans = Plan::all();
+
+        // users
+        $users = User::all();
+
+        return view(
+            'admin.projects.edit',
+            compact('project', 'plans', 'users')
+        );
     }
 
     /**
