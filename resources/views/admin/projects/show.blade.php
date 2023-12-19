@@ -68,8 +68,9 @@
                     @foreach($project->custom_fields as $field => $value)
                     <div class="flex justify-between">
                         <span class="text-neutral-500">{{$field}}</span>
-                        <span class="text-neutral-900">{{$value}} /
-                            {{intval($project->plan->features->$field)}}</span>
+                        <span class="text-neutral-900">{{$value}}
+                            @if(intval($project->plan->features->$field) > 1)/
+                            {{intval($project->plan->features->$field)}} @endif</span>
                     </div>
                     @endforeach
                 </div>
