@@ -83,7 +83,19 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <x-input-label for="private_note" value="Private Note" />
+                            <textarea type="text" placeholder="Type your note here (only visible to admins)."
+                                name="private_note"
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"></textarea>
+                        </div>
 
+                        <div class="form-group">
+                            <x-input-label for="public_note" value="Public Note" />
+                            <textarea type="text" placeholder="Type your note here (visible to client)."
+                                name="public_note"
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"></textarea>
+                        </div>
                         <x-primary-button type="button" onclick="submitForm()" class="max-w-fit">
                             <span>Edit project &rarr;</span>
                         </x-primary-button>
