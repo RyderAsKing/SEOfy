@@ -7,14 +7,14 @@
 
             @if(auth()->user()->is_admin)
             <div>
-                <a href="{{route('admin.projects.edit', $project)}}"
+                <x-primary-link href="{{route('admin.projects.edit', $project)}}"
                     class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
                     <span>Edit Project &rarr;</span>
-                </a>
-                <a href="{{route('admin.projects.timeline.create', $project)}}"
+                </x-primary-link>
+                <x-primary-link href="{{route('admin.projects.timeline.create', $project)}}"
                     class="w-max inline-flex items-center justify-between w-auto h-10 px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none bg-neutral-950 hover:bg-neutral-950/90">
                     <span>Add update &rarr;</span>
-                </a>
+                </x-primary-link>
             </div>
             @endif
         </div>
