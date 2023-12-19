@@ -20,7 +20,32 @@
         </div>
     </x-slot>
 
-    <div class="py-12 grid grid-cols-2 max-w-7xl mx-auto gap-2 sm:px-6 lg:px-8">
+    <div class="py-12 grid grid-cols-2 max-w-7xl mx-auto gap-3 sm:px-6 lg:px-8">
+        @if($project->private_note != null)
+        <div
+            class="col-span-2 relative w-full rounded-lg border bg-white p-4 [&>svg]:absolute [&>svg]:text-foreground [&>svg]:left-4 [&>svg]:top-4 [&>svg+div]:translate-y-[-3px] [&:has(svg)]:pl-11 text-nuetral-900">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" x2="20" y1="19" y2="19"></line>
+            </svg>
+            <h5 class="mb-1 font-medium leading-none tracking-tight">Private Note</h5>
+            <div class="text-sm opacity-70">{{$project->private_note}}</div>
+        </div>
+        @endif
+
+        @if($project->public_note != null)
+        <div
+            class="col-span-2 relative w-full rounded-lg border bg-white p-4 [&>svg]:absolute [&>svg]:text-foreground [&>svg]:left-4 [&>svg]:top-4 [&>svg+div]:translate-y-[-3px] [&:has(svg)]:pl-11 text-nuetral-900">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" x2="20" y1="19" y2="19"></line>
+            </svg>
+            <h5 class="mb-1 font-medium leading-none tracking-tight">Notes</h5>
+            <div class="text-sm opacity-70">{{$project->public_note}}</div>
+        </div>
+        @endif
 
         <div class="flex flex-col gap-4">
             <div>
@@ -74,7 +99,6 @@
                 </div>
             </div>
         </div>
-        <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
         <div class="col-span-2 mt-4">
             <h2 class="text-xl">Updates</h2>
             @if($timelines->count() == 0)
