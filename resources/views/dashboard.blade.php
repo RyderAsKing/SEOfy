@@ -25,6 +25,11 @@
                 <x-primary-link href="{{route('admin.projects.index')}}">
                     <span>Manage projects &rarr;</span>
                 </x-primary-link>
+                @else
+
+                <x-primary-link href="{{route('projects.index')}}">
+                    <span>View projects &rarr;</span>
+                </x-primary-link>
                 @endif
             </div>
 

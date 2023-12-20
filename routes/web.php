@@ -36,6 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name(
         'profile.destroy'
     );
+
+    Route::get('/projects', [
+        App\Http\Controllers\ProjectController::class,
+        'index',
+    ])->name('projects.index');
+
+    Route::get('/projects/{project}/show', [
+        App\Http\Controllers\ProjectController::class,
+        'show',
+    ])->name('projects.show');
 });
 
 Route::prefix('admin')

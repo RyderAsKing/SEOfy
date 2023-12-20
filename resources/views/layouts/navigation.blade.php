@@ -29,6 +29,12 @@
                         :active="request()->routeIs('admin.projects.index')">
                         {{ __('Projects') }}
                     </x-nav-link>
+                    @else
+
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
+                        {{ __('Projects') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>
@@ -119,6 +125,12 @@
 
             <x-responsive-nav-link :href="route('admin.projects.index')"
                 :active="request()->routeIs('admin.projects.index')">
+                {{ __('Projects') }}
+            </x-responsive-nav-link>
+
+            @else
+
+            <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
                 {{ __('Projects') }}
             </x-responsive-nav-link>
 
