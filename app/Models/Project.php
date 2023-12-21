@@ -21,6 +21,7 @@ class Project extends Model
         'custom_fields',
         'public_note',
         'private_note',
+        'status',
     ];
 
     public $casts = [
