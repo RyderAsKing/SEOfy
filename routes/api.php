@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\WHMCSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('app.api_key')->group(function () {});
+Route::name('whmcs.')
+    ->prefix('whmcs')
+    ->middleware('app.api_key')
+    ->group(function () {
+        Route::post('create-account', [
+            WHMCSController::class,
+            'CreateAccount',
+        ])->name('create-account');
+        Route::post('suspend-account', [
+            WHMCSController::class,
+            'SuspendAccount',
+        ])->name('suspend-account');
+        Route::post('unsuspend-account', [
+            WHMCSController::class,
+            'UnsuspendAccount',
+        ])->name('unsuspend-account');
+        Route::post('terminate-account', [
+            WHMCSController::class,
+            'TerminateAccount',
+        ])->name('terminate-account');
+        Route::post('change-password', [
+            WHMCSController::class,
+            'ChangePassword',
+        ])->name('change-password');
+    });
