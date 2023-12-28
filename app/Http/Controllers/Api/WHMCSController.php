@@ -6,6 +6,7 @@ use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class WHMCSController extends Controller
@@ -96,23 +97,141 @@ class WHMCSController extends Controller
         );
     }
 
-    public function SuspendAccount()
+    public function SuspendAccount(Request $request)
     {
-        return true;
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $project->status = 'suspended';
+
+        $project->save();
+
+        return response()->json(['success' => true], 200);
     }
 
-    public function UnsuspendAccount()
+    public function UnsuspendAccount(Request $request)
     {
-        return true;
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $project->status = 'active';
+
+        $project->save();
+
+        return response()->json(['success' => true], 200);
     }
 
-    public function TerminateAccount()
+    public function TerminateAccount(Request $request)
     {
-        return true;
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $project->status = 'terminated'; // queue for deletion in 30 days
+
+        $project->save();
+
+        $deletion_queue = Carbon::now()->addDays(30);
+
+        return response()->json(
+            ['success' => true, 'deletion_queue' => $deletion_queue],
+            200
+        );
     }
 
-    public function ChangePassword()
+    public function ChangePassword(Request $request)
     {
-        return true;
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+            'password' => 'required|string',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $user->password = bcrypt($request->password);
+
+        $user->save();
+
+        return response()->json(['success' => true], 200);
     }
 }
