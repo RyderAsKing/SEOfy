@@ -39,8 +39,10 @@
                 <h1 class="text-xl mb-1">Project details</h1>
                 <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
                     <div class="block mb-3">
-                        <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900">{{$project->name}}
-
+                        <h5 class="text-xl font-bold leading-none tracking-tight text-neutral-900 flex justify-between">
+                            {{$project->name}}
+                            <span
+                                class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{{$project->status}}</span>
                         </h5>
                     </div>
                     <span>Website: <a href="{{$project->url}}"

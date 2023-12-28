@@ -23,23 +23,32 @@ Route::name('whmcs.')
     ->prefix('whmcs')
     ->middleware('app.api_key')
     ->group(function () {
+        Route::get('check-account', [
+            WHMCSController::class,
+            'CheckAccount',
+        ])->name('check-account');
+
         Route::post('create-account', [
             WHMCSController::class,
             'CreateAccount',
         ])->name('create-account');
-        Route::post('suspend-account', [
+
+        Route::patch('suspend-account', [
             WHMCSController::class,
             'SuspendAccount',
         ])->name('suspend-account');
-        Route::post('unsuspend-account', [
+
+        Route::patch('unsuspend-account', [
             WHMCSController::class,
             'UnsuspendAccount',
         ])->name('unsuspend-account');
-        Route::post('terminate-account', [
+
+        Route::delete('terminate-account', [
             WHMCSController::class,
             'TerminateAccount',
         ])->name('terminate-account');
-        Route::post('change-password', [
+
+        Route::patch('change-password', [
             WHMCSController::class,
             'ChangePassword',
         ])->name('change-password');
