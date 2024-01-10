@@ -116,7 +116,7 @@
                     <div class="flex-start flex items-center pt-3">
                         <div class="-ml-[5px] mr-3 h-[9px] w-[9px] rounded-full bg-neutral-500 "></div>
                         <p class="text-sm text-neutral-500 ">
-                            {{$timeline->created_at->format('d.m.Y')}}
+                            {{$timeline->created_at->diffForHumans()}}
                         </p>
                     </div>
                     <div class=" ml-4 mt-2">
@@ -127,8 +127,8 @@
                     </div>
                     @if(auth()->user()->is_admin)
                     <div class="flex ml-4 mb-6 gap-2 items-center">
-                        <a href="{{route('admin.projects.timeline.edit', [$project, $timeline])}}"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        <a class="text-blue-500"
+                            href="{{route('admin.projects.timeline.edit', [$project, $timeline])}}">
                             <span>Edit update &rarr;</span>
                         </a>
 
@@ -136,7 +136,7 @@
                             action="{{route('admin.projects.timeline.destroy', [$project, $timeline->id])}}">
                             @csrf
                             @method('DELETE')
-                            <x-secondary-button class="h-full" type="submit">Delete update X</x-secondary-button>
+                            <button class="text-red-500" type="submit">Delete update X</button>
                         </form>
                     </div>
                     @endif
