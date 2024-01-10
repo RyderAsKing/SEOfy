@@ -87,7 +87,8 @@
                             <select name="user_id" id="user_id"
                                 class="form-control select2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
                                 @foreach($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }} | {{ $user->email }}</option>
+                                <option value="{{ $user->id }}" @if($project->user_id == $user->id) selected @endif>{{
+                                    $user->name }} | {{ $user->email }}</option>
                                 @endforeach
                             </select>
 
