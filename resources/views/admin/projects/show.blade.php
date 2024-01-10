@@ -87,7 +87,7 @@
                 <line x1="12" x2="20" y1="19" y2="19"></line>
             </svg>
             <h5 class="mb-1 font-medium leading-none tracking-tight">Private Note</h5>
-            <div class="text-sm opacity-70">{{$project->private_note}}</div>
+            <div class="text-sm opacity-80" style="white-space: pre-line">{!! $project->private_note !!}</div>
         </div>
         @endif
 
@@ -100,7 +100,7 @@
                 <line x1="12" x2="20" y1="19" y2="19"></line>
             </svg>
             <h5 class="mb-1 font-medium leading-none tracking-tight">Notes</h5>
-            <div class="text-sm opacity-70">{{$project->public_note}}</div>
+            <div class="text-sm opacity-70">{!! $project->public_note !!}</div>
         </div>
         @endif
         <div class="col-span-2 mt-4">
