@@ -52,4 +52,6 @@ Route::name('whmcs.')
             WHMCSController::class,
             'ChangePassword',
         ])->name('change-password');
+
+        Route::patch('renew', [WHMCSController::class, 'renew'])->name('renew');
     });

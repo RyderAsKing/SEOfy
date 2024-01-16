@@ -235,10 +235,8 @@ class WHMCSController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function RenewAccount(Request $request)
+    public function Renew(Request $request)
     {
-        // set project to active
-
         $validation = Validator::make($request->all(), [
             'project_id' => 'required|integer',
             'ext_id' => 'required|integer',
