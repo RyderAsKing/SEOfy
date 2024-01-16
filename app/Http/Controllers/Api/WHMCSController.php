@@ -234,4 +234,39 @@ class WHMCSController extends Controller
 
         return response()->json(['success' => true], 200);
     }
+
+    public function RenewAccount(Request $request)
+    {
+        // set project to active
+
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $project->status = 'active';
+
+        $project->save();
+
+        return response()->json(['success' => true], 200);
+    }
 }
