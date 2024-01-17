@@ -108,6 +108,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|min:6',
             'is_admin' => 'nullable',
+            'ext_id' => 'nullable',
         ]);
 
         $user = User::find($id);
@@ -120,6 +121,8 @@ class UserController extends Controller
         }
 
         $user->is_admin = $request->get('is_admin') ? 1 : 0;
+
+        $user->ext_id = $request->get('ext_id');
 
         $user->save();
 

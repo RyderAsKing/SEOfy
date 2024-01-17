@@ -56,6 +56,14 @@
                             @enderror
                         </div>
 
+                        <div class="flex flex-col">
+                            <x-input-label for="ext_id" value="External ID" />
+                            <x-text-input type="ext_id" name="ext_id" label="ext_id" placeholder="Eg. 25"
+                                autocomplete="new-password" value="{{$user->ext_id}}" />
+                            @error('ext_id')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
+                        </div>
 
                         <div class="items-center">
                             <input id="checkbox-id" type="checkbox" name="is_admin"
