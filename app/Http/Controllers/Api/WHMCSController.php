@@ -189,16 +189,11 @@ class WHMCSController extends Controller
             return response()->json(['error' => 'Project not found'], 404);
         }
 
-        $project->status = 'terminated'; // queue for deletion in 30 days
+        // delete project
 
-        $project->save();
+        $project->delete();
 
-        $deletion_queue = Carbon::now()->addDays(30);
-
-        return response()->json(
-            ['success' => true, 'deletion_queue' => $deletion_queue],
-            200
-        );
+        return response()->json(['success' => true], 200);
     }
 
     public function ChangePassword(Request $request)
