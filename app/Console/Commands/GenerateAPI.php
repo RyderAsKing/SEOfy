@@ -34,8 +34,8 @@ class GenerateAPI extends Command
         file_put_contents(
             $this->laravel->environmentFilePath(),
             str_replace(
-                'APP_KEY=' . env('APP_KEY'),
-                'APP_KEY=' . $key,
+                'APP_API_KEY=' . env('APP_API_KEY'),
+                'APP_API_KEY=' . $key,
                 file_get_contents($this->laravel->environmentFilePath())
             )
         );
