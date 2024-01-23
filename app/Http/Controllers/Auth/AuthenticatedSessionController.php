@@ -2,21 +2,38 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(Request $request)
     {
+        if ($request->temporary_token) {
+            $user = User::where(
+                'temporary_token',
+                $request->temporary_token
+            )->first();
+
+            if ($user) {
+                $user->temporary_token = null;
+                $user->save();
+
+                Auth::login($user);
+                $project = $user->projects()->firstOrFail();
+                return $this->redirectTo($project, $request->admin);
+            }
+        }
+
         return view('auth.login');
     }
 
@@ -44,5 +61,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function redirectTo($project, $admin)
+    {
+        if ($admin == 'true') {
+            return redirect()->route('admin.projects.show', $project);
+        } else {
+            return redirect()->route('projects.show', $project);
+        }
     }
 }

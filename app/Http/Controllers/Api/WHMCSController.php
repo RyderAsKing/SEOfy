@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Plan;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class WHMCSController extends Controller
@@ -261,5 +262,47 @@ class WHMCSController extends Controller
         $project->save();
 
         return response()->json(['success' => true], 200);
+    }
+
+    public function SSO(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'project_id' => 'required|integer',
+            'ext_id' => 'required|integer',
+        ]);
+
+        if ($validation->fails()) {
+            return response()->json(['error' => $validation->errors()], 401);
+        }
+
+        $user = User::where('ext_id', $request->ext_id)->first();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $project = $user
+            ->projects()
+            ->where('id', $request->project_id)
+            ->first();
+
+        if (!$project) {
+            return response()->json(['error' => 'Project not found'], 404);
+        }
+
+        $temporary_token = Str::random(40);
+
+        // Save the token in the database or cache (you may need to create a new column for this)
+        $user->update(['temporary_token' => $temporary_token]);
+
+        // Construct the login URL with the generated temporary token
+        $loginUrl = url(
+            "/login?temporary_token=$temporary_token&project=$request->project_id&admin=false"
+        );
+
+        return response()->json(
+            ['success' => true, 'redirectTo' => $loginUrl],
+            200
+        );
     }
 }
