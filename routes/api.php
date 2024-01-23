@@ -53,8 +53,6 @@ Route::name('whmcs.')
             'ChangePassword',
         ])->name('change-password');
 
-        Route::get('sso', [WHMCSController::class, 'SSO'])->name(
-            'client-login'
-        );
+        Route::get('sso', [WHMCSController::class, 'SSO'])->name('sso');
         Route::patch('renew', [WHMCSController::class, 'renew'])->name('renew');
     });
