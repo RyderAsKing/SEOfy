@@ -37,7 +37,7 @@
     </form>
     @endif
 
-    @if(!auth()->user()->two_factor_confirmed_at)
+    @if(!auth()->user()->two_factor_confirmed_at && auth()->user()->two_factor_secret)
     <x-modal name="show-qr" show focusable>
         <form method="post" action="{{ route('two-factor.confirm') }}" class="p-6">
             @csrf
