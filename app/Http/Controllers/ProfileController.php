@@ -34,7 +34,10 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with(
+            'status',
+            'profile-updated'
+        );
     }
 
     /**
@@ -56,5 +59,22 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function updatePassword(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'current_password' => ['required', 'current-password'],
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        $request->user()->password = bcrypt($request->password);
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with(
+            'success',
+            'Password updated successfully.'
+        );
     }
 }

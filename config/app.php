@@ -196,6 +196,7 @@ return [
 
         // third party
         Lab404\Impersonate\ImpersonateServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
     ],
 
     /*

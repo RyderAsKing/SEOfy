@@ -56,6 +56,14 @@
             @if (session('error'))
                 notyf.error('{{ session('error') }}');
             @endif
+
+            @if (session('status') == 'two-factor-authentication-enabled')
+                notyf.success('Please finish configuring two factor authentication.');
+                @endif
+
+                @if (session('status') == 'two-factor-authentication-confirmed')
+                    notyf.success('Two factor authentication has been enabled.');
+                @endif
         </script>
     </body>
 

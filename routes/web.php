@@ -46,6 +46,11 @@ Route::middleware('auth')->group(function () {
         App\Http\Controllers\ProjectController::class,
         'show',
     ])->name('projects.show');
+
+    Route::patch('/profile/password', [
+        ProfileController::class,
+        'updatePassword',
+    ])->name('profile.password.update');
 });
 
 Route::prefix('admin')
@@ -89,5 +94,3 @@ Route::prefix('admin')
     });
 
 Route::impersonate();
-
-require __DIR__ . '/auth.php';
