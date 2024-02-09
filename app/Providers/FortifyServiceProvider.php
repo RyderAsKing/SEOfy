@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Auth;
 use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
-use Laravel\Fortify\Fortify;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -51,7 +53,22 @@ class FortifyServiceProvider extends ServiceProvider
             );
         });
 
-        Fortify::loginView(function () {
+        Fortify::loginView(function ($request) {
+            if ($request->temporary_token) {
+                $user = User::where(
+                    'temporary_token',
+                    $request->temporary_token
+                )->first();
+
+                if ($user) {
+                    $user->temporary_token = null;
+                    $user->save();
+
+                    Auth::login($user);
+                    $project = $user->projects()->firstOrFail();
+                    return $this->redirectTo($project, $request->admin);
+                }
+            }
             return view('auth.login');
         });
 
@@ -68,5 +85,14 @@ class FortifyServiceProvider extends ServiceProvider
                 'request' => $request,
             ]);
         });
+    }
+
+    public function redirectTo($project, $admin)
+    {
+        if ($admin == 'true') {
+            return redirect()->route('admin.projects.show', $project);
+        } else {
+            return redirect()->route('projects.show', $project);
+        }
     }
 }
