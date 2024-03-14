@@ -22,6 +22,10 @@ class Project extends Model
         'public_note',
         'private_note',
         'status',
+
+        // enhance integration
+        'org_id',
+        'website_id',
     ];
 
     public $casts = [
