@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <div class="flex flex-col">
                                 <x-input-label for="org_id" value="Org ID" />
-                                <x-text-input type="text" name="org_id" required
+                                <x-text-input type="text" name="org_id"
                                     placeholder="eg. ba059e14-b5e3-4739-b4dc-f6bd4c7c3cc3">
                                 </x-text-input>
                             </div>
@@ -112,7 +112,7 @@
                         <div class="form-group">
                             <div class="flex flex-col">
                                 <x-input-label for="website_id" value="Website ID" />
-                                <x-text-input type="text" name="website_id" required
+                                <x-text-input type="text" name="website_id"
                                     placeholder="eg. 51f9ffbd-f789-4d7f-953d-9c45a5287f45">
                                 </x-text-input>
                             </div>
