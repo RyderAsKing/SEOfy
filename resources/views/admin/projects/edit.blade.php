@@ -97,7 +97,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group ">
                             <x-input-label for="private_note" value="Private Note" />
                             <textarea type="text" placeholder="Type your note here (only visible to admins)."
                                 name="private_note"
@@ -118,6 +118,39 @@
                             <x-input-error :messages="$message"> </x-input-error>
                             @enderror
                         </div>
+
+                        <hr>
+
+                        <p class="text-md">Integration for <a href="https://enhance.com/" class="text-blue-500"
+                                target="_blank">enhance
+                                control panel</a> (leave empty if not setup)</p>
+
+                        <div class="form-group">
+                            <div class="flex flex-col">
+                                <x-input-label for="org_id" value="Org ID" />
+                                <x-text-input type="text" name="org_id" value="{{ $project->org_id }}" required
+                                    placeholder="eg. ba059e14-b5e3-4739-b4dc-f6bd4c7c3cc3">
+                                </x-text-input>
+                            </div>
+                            @error('org_id')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
+                        </div>
+
+                        {{-- website id --}}
+
+                        <div class="form-group">
+                            <div class="flex flex-col">
+                                <x-input-label for="website_id" value="Website ID" />
+                                <x-text-input type="text" name="website_id" value="{{ $project->website_id }}" required
+                                    placeholder="eg. 51f9ffbd-f789-4d7f-953d-9c45a5287f45">
+                                </x-text-input>
+                            </div>
+                            @error('website_id')
+                            <x-input-error :messages="$message"> </x-input-error>
+                            @enderror
+                        </div>
+
                         <x-primary-button type="button" onclick="submitForm()" class="max-w-fit">
                             <span>Edit project &rarr;</span>
                         </x-primary-button>

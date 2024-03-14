@@ -58,6 +58,9 @@ class ProjectController extends Controller
             'url' => 'required',
             'plan_id' => 'required',
             'user_id' => 'required',
+            // enhance integration
+            'org_id' => 'nullable|string',
+            'website_id' => 'nullable|string',
         ]);
 
         $project = Project::create($request->all());
@@ -133,6 +136,9 @@ class ProjectController extends Controller
             'features' => 'json|required',
             'public_note' => 'nullable|max:2000',
             'private_note' => 'nullable|max:2000',
+            // enhance integration
+            'org_id' => 'nullable|string',
+            'website_id' => 'nullable|string',
         ]);
 
         $project = Project::findOrFail($id);
@@ -143,6 +149,10 @@ class ProjectController extends Controller
         $project->url = $request->url;
         $project->public_note = $request->public_note;
         $project->private_note = $request->private_note;
+
+        // enhance integration
+        $project->org_id = $request->org_id;
+        $project->website_id = $request->website_id;
 
         // unset the features
         $project->custom_fields = null;
