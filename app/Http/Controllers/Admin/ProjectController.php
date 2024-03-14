@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Exception;
 use App\Models\Plan;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class ProjectController extends Controller
 {
@@ -94,6 +96,49 @@ class ProjectController extends Controller
             ->timeline()
             ->latest()
             ->paginate(25);
+
+        $hitsData = [];
+        if ($project->org_id && $project->website_id) {
+            // get the organization and website
+            $org_id = $project->org_id;
+            $website_id = $project->website_id;
+
+            $url =
+                env('ENHANCE_URL') .
+                "/orgs/{$org_id}/websites/{$website_id}/metrics";
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: Bearer ' . env('ENHANCE_API'),
+                    'Content-Type: application/json',
+                ],
+            ]);
+
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+            $response = curl_exec($curl);
+
+            if ($response === false) {
+                throw new Exception('cURL error: ' . curl_error($curl));
+            }
+
+            curl_close($curl);
+
+            $hitsData = json_decode($response, true);
+
+            dd($hitsData);
+        }
+
         return view('admin.projects.show', compact('project', 'timelines'));
     }
 
