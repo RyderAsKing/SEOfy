@@ -89,7 +89,7 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
         //
         $timelines = $project
@@ -99,6 +99,52 @@ class ProjectController extends Controller
 
         $hitsData = [];
         if ($project->org_id && $project->website_id) {
+            $fields = [];
+
+            if ($request->timeframe != null) {
+                if ($request->timeframe == 'today') {
+                    $fields['start'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('today midnight')
+                    );
+                    $fields['end'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('tomorrow midnight') - 1
+                    );
+                    $fields['granularity'] = 'hour';
+                } elseif ($request->timeframe == 'week') {
+                    $fields['start'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('last monday midnight')
+                    );
+                    $fields['end'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('tomorrow midnight') - 1
+                    );
+                    $fields['granularity'] = 'day';
+                } elseif ($request->timeframe == 'month') {
+                    $fields['start'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('first day of this month midnight')
+                    );
+                    $fields['end'] = date(
+                        'Y-m-d\TH:i:s\Z',
+                        strtotime('tomorrow midnight') - 1
+                    );
+                    $fields['granularity'] = 'day';
+                }
+            } else {
+                $fields['start'] = date(
+                    'Y-m-d\TH:i:s\Z',
+                    strtotime('today midnight')
+                );
+                $fields['end'] = date(
+                    'Y-m-d\TH:i:s\Z',
+                    strtotime('tomorrow midnight') - 1
+                );
+                $fields['granularity'] = 'hour';
+            }
+
             // get the organization and website
             $org_id = $project->org_id;
             $website_id = $project->website_id;
@@ -106,6 +152,8 @@ class ProjectController extends Controller
             $url =
                 env('ENHANCE_URL') .
                 "/orgs/{$org_id}/websites/{$website_id}/metrics";
+
+            $url .= '?' . http_build_query($fields);
 
             $curl = curl_init();
 
@@ -134,12 +182,29 @@ class ProjectController extends Controller
 
             curl_close($curl);
 
-            $hitsData = json_decode($response, true);
+            $result = json_decode($response, true);
+            $hitsData['data'] = $result['items'];
 
-            dd($hitsData);
+            $hitsData['total_hits'] = array_sum(
+                array_column($result['items'], 'totalHits')
+            );
+            $hitsData['unique_hits'] = array_sum(
+                array_column($result['items'], 'uniqueHits')
+            );
+
+            $hitsData['bandwidth'] =
+                array_sum(array_column($result['items'], 'bytesReceived')) +
+                array_sum(array_column($result['items'], 'bytesSent'));
+
+            $hitsData['bandwidth'] =
+                $hitsData['bandwidth'] / 1024 / 1024 / 1024;
+            $hitsData['bandwidth'] = number_format($hitsData['bandwidth'], 2);
         }
 
-        return view('admin.projects.show', compact('project', 'timelines'));
+        return view(
+            'admin.projects.show',
+            compact('project', 'timelines', 'hitsData')
+        );
     }
 
     /**

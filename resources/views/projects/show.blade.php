@@ -8,6 +8,40 @@
     </x-slot>
 
     <div class="py-12 grid grid-cols-2 max-w-7xl mx-auto gap-3 sm:px-6 lg:px-8">
+        @if(isset($hitsData['data']))
+        <div class="col-span-2 flex flex-col gap-2">
+            <div class="w-full">
+                <h1 class="text-xl mb-1">Visitors</h1>
+                <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
+                    <div class="block flex justify-between items-center">
+                        <p class="text-md leading-none tracking-tight text-neutral-900 ">
+                            This project had <strong> {{$hitsData['total_hits']}} visits</strong> <span
+                                class="text-sm">over the
+                                last
+                                {{isset($_GET['timeframe']) ?
+                                $_GET['timeframe'] : 'day'}}</span>
+
+                        </p>
+                        <span
+                            class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{{$hitsData['unique_hits']}}
+                            unique visitors</span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div>
+                <h1 class="text-xl mb-1">Bandwidth</h1>
+                <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
+                    <p>This project has used <strong> {{$hitsData['bandwidth']}} GB </strong> over the last
+                        {{isset($_GET['timeframe']) ?
+                        $_GET['timeframe'] : 'day'}}</p>
+
+                </div>
+            </div>
+        </div>
+        @endif
+
         @if(auth()->user()->is_admin && $project->private_note != null)
         <div
             class="col-span-2 relative w-full rounded-lg border bg-white p-4 [&>svg]:absolute [&>svg]:text-foreground [&>svg]:left-4 [&>svg]:top-4 [&>svg+div]:translate-y-[-3px] [&:has(svg)]:pl-11 text-nuetral-900">
