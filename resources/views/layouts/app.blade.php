@@ -23,6 +23,8 @@
         <!-- Third party JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
 
     <body class="font-sans antialiased">
@@ -65,6 +67,8 @@
                     notyf.success('Two factor authentication has been enabled.');
                 @endif
         </script>
+
+
     </body>
 
 </html>

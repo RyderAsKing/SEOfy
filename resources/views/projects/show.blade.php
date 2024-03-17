@@ -11,7 +11,20 @@
         @if(isset($hitsData['data']))
         <div class="col-span-2 flex flex-col gap-2">
             <div class="w-full">
-                <h1 class="text-xl mb-1">Visitors</h1>
+                <h1 class="text-xl mb-1 flex justify-between">Visitors <span class="inline-flex rounded-md shadow-sm">
+                        <a href="{{ route('projects.show', $project)}}?timeframe=today"
+                            class="px-4 py-2 text-sm font-medium  bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 ">
+                            Today
+                        </a>
+                        <a href="{{ route('projects.show', $project)}}?timeframe=week"
+                            class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 ">
+                            Week
+                        </a>
+                        <a href="{{ route('projects.show', $project)}}?timeframe=month"
+                            class="px-4 py-2 text-sm font-medium text-gray-900  bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 ">
+                            Month
+                        </a>
+                    </span></h1>
                 <div class="bg-white border rounded-lg shadow-sm p-7 border-neutral-200/60">
                     <div class="block flex justify-between items-center">
                         <p class="text-md leading-none tracking-tight text-neutral-900 ">
@@ -26,9 +39,15 @@
                             class="bg-gray-100 text-gray-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">{{$hitsData['unique_hits']}}
                             unique visitors</span>
                     </div>
-
+                    <div class="grid grid-cols-2 gap-1">
+                        <div>
+                            <canvas id="hits"></canvas>
+                        </div>
+                        <div>
+                            <canvas id="uniqueHits"></canvas>
+                        </div>
+                    </div>
                 </div>
-
             </div>
             <div>
                 <h1 class="text-xl mb-1">Bandwidth</h1>
@@ -162,4 +181,123 @@
         </div>
         {{$timelines->links()}}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+      const hitsData = {!! json_encode($hitsData['data']) !!};
+      const labels = hitsData.map(entry => formatDate(entry.datetime));
+      const hitsDataArray = hitsData.map(entry => entry.totalHits);
+      const uniqueHitsDataArray = hitsData.map(entry => entry.uniqueHits);
+
+        function formatDate(timestamp) {
+        const date = new Date(timestamp);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+        }
+
+      const hitsConfig = {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Hits',
+            data: hitsDataArray,
+            fill: true,
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: '#41C9E2',
+            borderWidth: 2,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Hits'
+            }
+          },
+          scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              scaleLabel: {
+                labelString: 'Visits',
+                display: true,
+              },
+              ticks: {
+                beginAtZero: true
+              },
+              grid: {
+                display: false
+              }
+            }
+          }
+        },
+      };
+
+      const hitsCtx = document.getElementById('hits').getContext('2d');
+      const hitsChart = new Chart(hitsCtx, hitsConfig);
+
+      const uniqueHitsConfig = {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Unique Hits',
+            data: uniqueHitsDataArray,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Unique Hits'
+            }
+          },
+          scales: {
+            x: {grid : {
+                display: false
+            }},
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              scaleLabel: {
+                labelString: 'Unique Visits',
+                display: true,
+              },
+              ticks: {
+                beginAtZero: true
+              },
+                grid: {
+                    display: false
+                },
+            }
+          },
+        },
+
+      };
+
+      const uniqueHitsCtx = document.getElementById('uniqueHits').getContext('2d');
+      const uniqueHitsChart = new Chart(uniqueHitsCtx, uniqueHitsConfig);
+    });
+    </script>
 </x-app-layout>
