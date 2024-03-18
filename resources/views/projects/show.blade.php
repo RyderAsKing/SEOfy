@@ -182,6 +182,7 @@
         {{$timelines->links()}}
     </div>
 
+    @if($project->org_id && $project->website_id)
     <script>
         document.addEventListener('DOMContentLoaded', function () {
       const hitsData = {!! json_encode($hitsData['data']) !!};
@@ -300,4 +301,5 @@
       const uniqueHitsChart = new Chart(uniqueHitsCtx, uniqueHitsConfig);
     });
     </script>
+    @endif
 </x-app-layout>
